@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <title> My First Example Web Page </title>
+    <style>
+        h1 {
+            font-size: 40pt;
+            color: #170069;
+            font-family: 'Segoe UI'
+        }
+
+        #pagediv {
+            margin: auto;
+            width: 60%;
+            background-color: #fff;
+        }
+
+        #headerdiv {
+            background-color: #ccc;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            padding: 5px 5px 5px 5px;
+        }
+
+        #contentdiv {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 5px 15px 40px 15px;
+        }
+
+        body {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="pagediv">
+
+        <div id="headerdiv">
+            <h1 id="header1"> This is a Level 1 Header </h1>
+        </div>
+
+        <div id="contentdiv">
+            <p> This is a paragrah. <a href="https://ucl.ac.uk"> This is a link to UCL </a> </p>
+            <p> This is a second paragrah. </p>
+            <button type="button" onclick="myFunction()"> Click to change title </button>
+            <button type="button" onclick="changecolor()"> Click to change color </button>
+            <img src="Wk1/casalogo.png">
+
+
+
+            <script>
+                function myFunction() {
+                    console.log("Hello World!")
+                    document.getElementById("header1").innerHTML = "Welcome to Urban Data Visualisation"
+                }
+
+                function changecolor() {
+                    document.getElementById("header1").style.color = "#fff";
+                }
+
+            </script>
+
+        </div>
+
+
+    </div>
+</body>
+
+
+
+</html>
