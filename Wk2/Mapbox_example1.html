@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Mapbox Example 1 - Load a Basic Map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.18.0/mapbox-gl.css" rel="stylesheet">  // Add mapbox.gl stylesheet
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.18.0/mapbox-gl.js"></script>  // Add mapbox.gl JavaScript library
+
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+
+</head>
+
+
+<body>
+<div id="map"></div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoidGVlY2hpbm1pbmJlbiIsImEiOiJjbWtmcTJldHgwMWg2M2lzYnV2cnUzN2twIn0.6iawA9W8OLSwrcV_ZHG41g';  //Put your mapbox access token here
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        center: [-0.1, 51.5], // starting position [lng, lat]
+        style: 'mapbox://styles/mapbox/standard', // Basemap style. Can be changed, e.g. standard-satellite
+        zoom: 9 // starting zoom
+    });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+</script>
+
+
+</body>
+</html>
