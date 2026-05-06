@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>London Real Time Air Quality Example</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+<script charset="utf-8" src="https://d3js.org/d3.v7.min.js"></script>
+    
+    
+<style>
+
+    #pagecontent {
+        width: 500px;
+        margin: auto;
+    }
+    
+    #airqualitytable {
+        width: 400px;
+        margin: auto;
+        background-color: #ddd;
+        margin-top: 30px;
+    }
+    
+    #airqualitytable td {
+        height: 50px;
+    }
+
+    #airqualitytable tr th {
+        text-align: center;
+        font: normal 12pt Verdana;
+        height: 40px;
+        color: #555;
+        width: 200px;
+    }    
+    
+    #airqualitytable tr td.PName {
+        text-align: center;
+        font: bold 14pt Verdana;
+    }
+
+    #airqualitytable tr td.PStatus {
+        text-align: center;
+        font: normal 12pt Verdana;
+    }
+    
+    h1 {
+        margin: 20px 0 0 0;
+        font: bold 18pt Verdana;
+    }
+    
+    p {
+        margin: 5px 0 5px 0;
+    }
+        
+    
+</style>
+</head>
+
+<body>
+
+
+<div id="pagecontent">
+    <h1>London Real Time Air Quality Data</h1>
+    <p>Data provided by <a href="https://aqicn.org/data-platform/token/#/">AQICN Open Data Platform</a>.</p>
+
+    <table id="airqualitytable">
+            <tr>
+            <th>Pollutant</th>
+            <th>Status</th>
+            </tr>
+            <tr>
+                <td class="PName">PM2.5</td>
+                <td class="PStatus" id="pm25">Data</td>
+            </tr>
+            <tr>
+                <td class="PName">PM10</td>
+                <td class="PStatus" id="pm10">Data</td>
+            </tr>
+            <tr>
+                <td class="PName">O3</td>
+                <td class="PStatus" id="o3">Data</td>
+            </tr>
+            <tr>
+                <td class="PName">NO2</td>
+                <td class="PStatus" id="no2">Data</td>
+            </tr>
+            <tr>
+                <td class="PName">SO2</td>
+                <td class="PStatus" id="so2">Data</td>
+            </tr>
+            <tr>
+                <td class="PName">CO</td>
+                <td class="PStatus" id="co">Data</td>
+            </tr>
+
+    </table>
+
+</div>
+
+
+
+<script>
+
+/*The AQICN API requires a city to be specified, and the use of a token. Details here- https://aqicn.org/api/
+So we create a city variable and token variable, and combine these for the final URL*/
+    
+var city = "london";
+var token = "065c9ad49f2ed519ebbd191cfc60a4b5e6dee4b7"
+var AQurl = "https://api.waqi.info/feed/" + city +"/?token=" + token;
+
+      d3.json(AQurl).then(function(AQData) {
+
+        console.log(AQData);
+        
+        setColor = function(value) {  // We will colour the table background according to the indicator value. Colours from here- https://aqicn.org/json-api/demo/
+            var color;        
+            if (value>=300){color="#7e0023";} else
+            if (value>=200){color="#660099";} else
+            if (value>=150){color="#cc0033";} else
+            if (value>=100){color="#ff9933";} else
+            if (value>=50){color="#ffde33";} else
+            if (value>0){color="#009966";} else
+            if (value=0){color="#cccccc";}
+            return color;
+            }
+        
+        var pollutants = [ // Insert pollutant values into an array
+            {"name": "pm25", "value": AQData.data.iaqi.pm25.v},
+            {"name": "pm10", "value": AQData.data.iaqi.pm10.v},
+            {"name": "o3", "value": AQData.data.iaqi.o3.v},
+            {"name": "no2", "value": AQData.data.iaqi.no2.v},
+            {"name": "so2", "value": AQData.data.iaqi.so2.v},
+            {"name": "co", "value": AQData.data.iaqi.co.v}
+        ];
+        
+        console.log(pollutants);
+
+        pollutants.forEach(function(pollutant) { //Loop through pollutants and enter them into the table
+                          
+            document.getElementById(pollutant.name).innerHTML = pollutant.value;   
+            var bgcolor = setColor(pollutant.value);  //Use setColor function to get background colour according to pollutant value     
+            document.getElementById(pollutant.name).style.backgroundColor = bgcolor;
+
+        });
+    
+    
+      });
+
+
+</script>
+
+</body>
+</html>

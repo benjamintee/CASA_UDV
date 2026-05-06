@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tfl Tube Line Status Real Time Data Example</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+<script charset="utf-8" src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+
+<body>
+
+<!--Table that will present the current status of each tube line-->
+<table id="TubeStatusTable">
+        <tr>
+        <th>Line</th>
+        <th>Status</th>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #B36305; color: #FFFFFF'>Bakerloo</td>
+            <td class="LineStatus" id="bakerloo">Bakerloo</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #E32017; color: #FFFFFF'>Central</td>
+            <td class="LineStatus" id="central">Central</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #FFD300; color: #000000'>Circle</td>
+            <td class="LineStatus" id="circle">Circle</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #00782A; color: #FFFFFF'>District</td>
+            <td class="LineStatus" id="district">District</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #F3A9BB; color: #000000'>Hammersmith and City</td>
+            <td class="LineStatus" id="hammersmith-city">Hammersmith and City</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #A0A5A9; color: #000000'>Jubilee</td>
+            <td class="LineStatus" id="jubilee">Jubilee</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #9B0056; color: #FFFFFF'>Metropolitan</td>
+            <td class="LineStatus" id="metropolitan">Metropolitan</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #000000; color: #FFFFFF'>Northern</td>
+            <td class="LineStatus" id="northern">Northern</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #003688; color: #FFFFFF'>Piccadilly</td>
+            <td class="LineStatus" id="piccadilly">Piccadilly</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #0098D4; color: #FFFFFF'>Victoria</td>
+            <td class="LineStatus" id="victoria">Victoria</td>
+        </tr>
+        <tr>
+            <td class="LineName" style='background-color: #95CDBA; color: #000000'>Waterloo and City</td>
+            <td class="LineStatus" id="waterloo-city">Waterloo and City</td>
+        </tr>
+
+</table>
+
+
+
+<script>
+
+//This statement loads the JSON data for the TfL API, and then runs the function after the data is loaded. StatusData is a JSON array
+    d3.json("https://api.tfl.gov.uk/line/mode/tube/status").then(function(StatusData) {
+
+          console.log(StatusData); //Logs the StatusData JSON array in the console panel
+          console.log(StatusData[0].name); //Logs the name of tube line that is first in the array, Bakerloo
+          
+          StatusData.forEach(function(line){
+              console.log(line.name);
+              var StatusDescription = (line.lineStatuses[0].statusSeverityDescription); //This is where the line status is contained in the JSON data
+              document.getElementById(line.id).innerHTML = StatusDescription; //Write the line status to the corresponding cell in the HTML table
+          });
+
+      });
+
+</script>
+
+</body>
+</html>
